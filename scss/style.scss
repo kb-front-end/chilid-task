@@ -6,17 +6,42 @@ body{
     font-family: 'Open Sans', sans-serif;
     color:$textcolor;
 }
+.background-circle{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    height: 800px;
+    width: 800px;
+    background-color: rgba(255,255,255,0.85);
+background: rgba(255,255,255,0.85);
+background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,0.85) 0%, rgba(246,246,246,0.28) 47%, rgba(237,237,237,0) 70%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255,255,255,0.85)), color-stop(47%, rgba(246,246,246,0.28)), color-stop(70%, rgba(237,237,237,0)));
+background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,0.85) 0%, rgba(246,246,246,0.28) 47%, rgba(237,237,237,0) 70%);
+background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,0.85) 0%, rgba(246,246,246,0.28) 47%, rgba(237,237,237,0) 70%);
+background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,0.85) 0%, rgba(246,246,246,0.28) 47%, rgba(237,237,237,0) 70%);
+background: radial-gradient(ellipse at center, rgba(255,255,255,0.85) 0%, rgba(246,246,246,0.28) 47%, rgba(237,237,237,0) 70%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );
+}
 .datatable{
     position: absolute;
     top: 50%;
     left:50%;
     transform: translate(-50%,-50%);
     max-height: 90vh;
+    padding-bottom: 50px;
     
     .datatable__main-heading{
     color:#FFF;
     text-align: center;
+    font-size: 20px;
+        
+        .datatable__title{
+        margin-top: -5px;
+        }
     }
+    
 
     .datatable__table{
         background-color:#FFF;
@@ -88,11 +113,19 @@ body{
         font-weight: 700;
     }
 }
+.chilid-icon{
+    fill: #FFF;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    height: 20px;
+    margin-bottom: 20px;
+}
 
 @media 
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
-
     .datatable__cont, .datatable__item, th, .datatable__bit { 
 		display: block;
 	}
