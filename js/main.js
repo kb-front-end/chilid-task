@@ -81,7 +81,7 @@ function getData(){
     $.ajax({
         type:'GET',
         dataType: 'json',
-        url:'./dane/db.json',
+        url:'https://kb-front-end.github.io/chilid-task/dane/db.json',
         success: function(employees){
             $.each(employees, function (index, element) {
     $(".js-table__cont").append("<tr class='datatable__item js-table__item'>" + "<td class='datatable__bit'>" + element.id + "</td>" + "<td class='datatable__bit'>" + element.firstName + "</td>" + "<td class='datatable__bit'>" + element.lastName + "</td>" + "<td class='datatable__bit'>" +  element.dateOfBirth + "</td>" + "<td class='datatable__bit'>" + element.company + "</td>" + "<td class='datatable__bit'>" + element.note + "</td>" + '</tr>');
