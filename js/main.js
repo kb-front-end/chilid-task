@@ -28,7 +28,7 @@ function getCellValue(row, index){
 //Pagination
 function paginateStart(){
         var i;
-        $('.js-table').after('<div class="datatable__nav js-table__nav"><button class="datatable__back js-table__back">< back</button><button class="datatable__next js-table__next">next ></button</div>');
+        $('.js-table').after('<div class="datatable__nav js-table__nav"><button class="datatable__back js-table__back">< back</button><button class="datatable__next js-table__next">next ></button></div>');
         var rowsShown = 5;
         var rowsTotal = $('.js-table .js-table__cont .js-table__item').length;
         var numPages = rowsTotal/rowsShown;
@@ -68,12 +68,13 @@ $('.active').prevUntil("button").trigger('click');
 };
 
 if($(window).width() <= 760){
-    sortName();
+    sortName();  
 };
 
 //show "Sort by:"
 function sortName(){
     $('.datatable__item').eq(0).before('<p style="text-align:center;margin:3px 0;">Sort by:</p>');
+    
 };
 
 //get data from json file
