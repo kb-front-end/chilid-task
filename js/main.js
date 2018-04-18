@@ -1,90 +1,6 @@
-var dane = {
-    "pracownicy":[
-  {
-    "id": 1,
-    "firstName": "Jan",
-    "lastName": "Kowalski",
-    "dateOfBirth": "1.7.1990 11:35",
-    "company": "XSolve",
-    "note": 90
-  },
-  {
-    "id": 4,
-    "firstName": "Justyna",
-    "lastName": "Kowalska",
-    "dateOfBirth": "4.02.1976 14:37",
-    "company": "XSolve",
-    "note": 91
-  },
-  {
-    "id": 2,
-    "firstName": "Krzysztof",
-    "lastName": "Krawczyk",
-    "dateOfBirth": "28.10.1950 2:15",
-    "company": "Chilid",
-    "note": 27
-  },
-  {
-    "id": 3,
-    "firstName": "Bogusław",
-    "lastName": "Linda",
-    "dateOfBirth": "03.01.1963 23:10",
-    "company": "XSolve",
-    "note": 50
-  },
-  {
-    "id": 5,
-    "firstName": "Krzysztof",
-    "lastName": "Kononowicz",
-    "dateOfBirth": "10.10.1910 18:00",
-    "company": "Chilid",
-    "note": 77
-  },
-  {
-    "id": 6,
-    "firstName": "Maryla",
-    "lastName": "Rodowicz",
-    "dateOfBirth": "29.02.1936 11:35",
-    "company": "XSolve",
-    "note": 8
-  },
-
-  {
-    "id": 7,
-    "firstName": "Edyta",
-    "lastName": "Górniak",
-    "dateOfBirth": "14.11.1972 06:35",
-    "company": "XSolve",
-    "note": 25
-  },
-  {
-    "id": 8,
-    "firstName": "Dawid",
-    "lastName": "Podsiadło",
-    "dateOfBirth": "23.05.1993 16:15",
-    "company": "Chilid",
-    "note": 19
-  },
-  {
-    "id": 9,
-    "firstName": "Elvis",
-    "lastName": "Presley",
-    "dateOfBirth": "09.01.1935 01:35",
-    "company": "XSolve",
-    "note": 8
-  },
-]
-    };
-
 window.onload = function () {
-    paginateStart();
-    navButtons();
+    getData();
 };
-
-//Create rows with json data
-dane.pracownicy.forEach(function (element, index) {
-    $(".js-table__cont").append("<tr class='datatable__item js-table__item'>" + "<td class='datatable__bit'>" + element.id + "</td>" + "<td class='datatable__bit'>" + element.firstName + "</td>" + "<td class='datatable__bit'>" + element.lastName + "</td>" + "<td class='datatable__bit'>" + element.dateOfBirth + "</td>" + "<td class='datatable__bit'>" + element.company + "</td>" + "<td class='datatable__bit'>" + element.note + "</td>" + '</tr>')
-});
 
 //On clicking top row elements sort them
 $('th').click(function(){
@@ -135,6 +51,10 @@ function paginateStart(){
             $('.js-table .js-table__cont .js-table__item').css('opacity','0.0').hide().slice(startItem, endItem).
                     css('display','table-row').animate({opacity:1}, 300);
         });
+//after pagination sort by id and reset Navpage
+    $('.active').trigger("click");
+    $('th').eq(0).trigger('click');
+    $('th').eq(0).trigger('click');
     };
 
 //Navigation buttons
@@ -147,3 +67,30 @@ $('.active').prevUntil("button").trigger('click');
 })
 };
 
+if($(window).width() <= 760){
+    sortName();
+};
+
+//show "Sort by:"
+function sortName(){
+    $('.datatable__item').eq(0).before('<p style="text-align:center;margin:3px 0;">Sort by:</p>');
+};
+
+//get data from json file
+function getData(){
+    $.ajax({
+        type:'GET',
+        dataType: 'json',
+        url:'./dane/db.json',
+        success: function(employees){
+            $.each(employees, function (index, element) {
+    $(".js-table__cont").append("<tr class='datatable__item js-table__item'>" + "<td class='datatable__bit'>" + element.id + "</td>" + "<td class='datatable__bit'>" + element.firstName + "</td>" + "<td class='datatable__bit'>" + element.lastName + "</td>" + "<td class='datatable__bit'>" +  element.dateOfBirth + "</td>" + "<td class='datatable__bit'>" + element.company + "</td>" + "<td class='datatable__bit'>" + element.note + "</td>" + '</tr>');
+});
+    paginateStart();
+    navButtons();
+        },
+        error: function(){
+        alert('ERROR! Data unaccesible.')
+    }
+    });
+};
