@@ -5,14 +5,18 @@ window.onload = function () {
 //On clicking top row elements sort them
 $('th').click(function(){
     var table = $(this).parents('.js-table').eq(0);
-    var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+    var rows
+    if($(this).hasClass('js-dateheader')){
+    rows = table.find('tr:gt(0)').toArray().sort(comparerDate($(this).index()))
+       }else{
+    rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+    }
      if (!this.asc){rows = rows.reverse()}
         for (var i = 0; i < rows.length; i++){table.append(rows[i])}
     this.asc = !this.asc
     $('.active').trigger("click");
 });
 
-//Compare cells from one column
 function comparer(index) {
     return function(a, b) {
         var valA = getCellValue(a, index); 
@@ -21,9 +25,67 @@ function comparer(index) {
     }
 };
 
-function getCellValue(row, index){ 
-    return $(row).children('td').eq(index).text() 
+function comparerDate(index) {
+    return function(a, b) {
+        var valA = sortDate(a, index); 
+        var valB = sortDate(b, index);
+        return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+    }
 };
+
+function getCellValue(row, index){
+    var cell = $(row).children('td').eq(index).text();
+    return cell
+    };
+
+//Table sort only for Date of Birth
+function sortDate(row, index){
+var date = $(row).children($('.js-dateheader')).eq(index).text();
+var proper
+var check = date.split('')
+
+repairDate();
+properDate();
+
+//When data lacks 0 and array is to short    
+function repairDate(){
+var error = 'wrong data format';
+
+if(check.length < 16 && check.length > 13){
+if (check[1]==='.'){
+    check.unshift('0');
+};
+if (check[4]==='.'){
+check.splice(3,0,'0');
+check.join();
+};
+if(check[12]===':'){
+check.splice(11,0,'0')
+};
+return check
+    
+}else if(check.length<14){
+return error
+    
+}else{
+return check
+}
+}
+
+//Change order of date (or array) elements    
+function properDate(){
+var dateArray = [];
+var day = check.splice(0,2);
+var month = check.splice(1,2);
+var year = check.splice(2,4);
+check.splice(0,2);
+dateArray = year.concat('.',month,'.',day,check);
+proper = dateArray.join('');    
+};
+console.log(proper);
+return proper
+}
+
 
 //Pagination
 function paginateStart(){
@@ -84,8 +146,8 @@ function getData(){
         dataType: 'json',
         url:'https://kb-front-end.github.io/chilid-task/dane/db.json',
         success: function(employees){
-            $.each(employees, function (index, element) {
-    $(".js-table__cont").append("<tr class='datatable__item js-table__item'>" + "<td class='datatable__bit'>" + element.id + "</td>" + "<td class='datatable__bit'>" + element.firstName + "</td>" + "<td class='datatable__bit'>" + element.lastName + "</td>" + "<td class='datatable__bit'>" +  element.dateOfBirth + "</td>" + "<td class='datatable__bit'>" + element.company + "</td>" + "<td class='datatable__bit'>" + element.note + "</td>" + '</tr>');
+    $.each(employees, function (index, element) {
+    $(".js-table__cont").append("<tr class='datatable__item js-table__item'>" + "<td class='datatable__bit'>" + element.id + "</td>" + "<td class='datatable__bit'>" + element.firstName + "</td>" + "<td class='datatable__bit'>" + element.lastName + "</td>" + "<td class='datatable__bit js-birth-date'>" +  element.dateOfBirth + "</td>" + "<td class='datatable__bit'>" + element.company + "</td>" + "<td class='datatable__bit'>" + element.note + "</td>" + '</tr>');
 });
     paginateStart();
     navButtons();
