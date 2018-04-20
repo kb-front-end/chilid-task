@@ -14,7 +14,7 @@ $('th').click(function(){
      if (!this.asc){rows = rows.reverse()}
         for (var i = 0; i < rows.length; i++){table.append(rows[i])}
     this.asc = !this.asc
-    $('.active').trigger("click");
+    $('.js-table__nav a:first').trigger("click");
 });
 
 function comparer(index) {
